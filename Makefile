@@ -3,7 +3,9 @@ CFLAGS = -O3
 LFLAGS =  
 
 BUILD_DIR = ./build
+TEST_DIR  = ./tests
 EXEC_FILE = ipc
+
 
 
 all: $(EXEC_FILE)
@@ -20,5 +22,12 @@ $(BUILD_DIR)/ipc.o: ipc.c ipc.h
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
+
+tests: 
+	mkdir -p $(TEST_DIR)
+	dd if=/dev/urandom of=$(TEST_DIR)/256.txt  bs=1048576 count=256
+	dd if=/dev/urandom of=$(TEST_DIR)/1024.txt bs=1048576 count=1024
+	dd if=/dev/urandom of=$(TEST_DIR)/4096.txt bs=1048576 count=4096
+
 clean:
-	rm -rf $(BUILD_DIR) $(EXEC_FILE)
+	rm -rf $(BUILD_DIR) $(TEST_DIR) $(EXEC_FILE)

@@ -119,9 +119,9 @@ void test_shm( const char *const file_path, const ssize_t n_pages)
     }
 
 
-    char *const shm_buf = (char *)get_shm( n_pages);
+    char *const buffer = (char *)get_shm( n_pages);
 
-    if ( shm_buf == NULL )
+    if ( buffer == NULL )
     {
         return;
     }
@@ -169,7 +169,7 @@ void test_shm( const char *const file_path, const ssize_t n_pages)
 
         while ( true )
         {
-            ssize_t n_read = read( fd, shm_buf, getpagesize() * n_pages);
+            ssize_t n_read = read( fd, buffer, getpagesize() * n_pages);
 
             if ( n_read == -1 )
             {
@@ -183,7 +183,7 @@ void test_shm( const char *const file_path, const ssize_t n_pages)
 
             if ( n_read != getpagesize() * n_pages)
             {
-                munmap( shm_buf, getpagesize() * n_pages);
+                munmap( buffer, getpagesize() * n_pages);
                 sem_post( sem_f);
                 sem_post( sem_c);
                 sem_wait( sem_p);
